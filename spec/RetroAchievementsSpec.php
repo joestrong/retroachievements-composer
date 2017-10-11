@@ -22,4 +22,15 @@ class RetroAchievementsSpec extends ObjectBehavior
     {
         $this->getTopTenUsers()->shouldHaveCount(10);
     }
+
+    function it_should_get_console_ids()
+    {
+        $this->getConsoles();
+    }
+
+    function it_should_get_games_list()
+    {
+        $consoleId = 1;
+        $this->getGamesForConsole($consoleId);
+    }
 }

@@ -24,7 +24,7 @@ class RetroAchievements
     /**
      * Get the top ten users on RetroAchievements.org
      *
-     * @return array
+     * @return array Array of \JoeStrong\RetroAchievements\User objects
      * @throws \Error
      */
     public function getTopTenUsers() : array
@@ -34,10 +34,49 @@ class RetroAchievements
         return array_map(function ($data) {
             $user = new User();
             $user->username = $data->{1};
-            $user->points = $data->{2};
-            $user->trueRatio = $data->{3};
+            $user->points = (int) $data->{2};
+            $user->trueRatio = (int) $data->{3};
             return $user;
         }, $userData);
+    }
+
+    /**
+     * Get the consoles on RetroAchievements.org
+     *
+     * @return array Array of \JoeStrong\RetroAchievements\Console objects
+     * @throws \Error
+     */
+    public function getConsoles() : array
+    {
+        $consoleData = $this->request('API_GetConsoleIDs.php');
+        
+        return array_map(function ($data) {
+            $console = new Console();
+            $console->id = (int) $data->ID;
+            $console->name = $data->Name;
+            return $console;
+        }, $consoleData);
+    }
+
+    /**
+     * Get the games for a particular console
+     *
+     * @param int $consoleId The id of the console to get games for
+     * @return array Array of \JoeStrong\RetroAchievements\Game objects
+     * @throws \Error
+     */
+    public function getGamesForConsole(int $consoleId) : array
+    {
+        $gamesData = $this->request('API_GetGameList.php', ['i' => $consoleId]);
+
+        return array_map(function ($data) {
+            $game = new Game();
+            $game->id = (int) $data->ID;
+            $game->title = $data->Title;
+            $game->consoleId = (int) $data->ConsoleID;
+            $game->imageIcon = $data->ImageIcon;
+            return $game;
+        }, $gamesData);
     }
 
     /**
