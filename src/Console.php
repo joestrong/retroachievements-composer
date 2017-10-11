@@ -7,6 +7,6 @@
  */
 class Console
 {
-    public $id = 0;
-    public $name = '';
+    public $id;
+    public $name;
 }

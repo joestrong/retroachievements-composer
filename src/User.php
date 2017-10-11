@@ -7,7 +7,7 @@
  */
 class User
 {
-    public $username = '';
-    public $points = '';
-    public $trueRatio = '';
+    public $username;
+    public $points;
+    public $trueRatio;
 }
