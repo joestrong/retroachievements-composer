@@ -20,7 +20,8 @@
         }
     },
     "require-dev": {
-        "phpspec/phpspec": "^4.0"
+        "phpspec/phpspec": "^4.0",
+        "friendsofphp/php-cs-fixer": "^2.7"
     },
     "scripts": {
         "psr": "./vendor/bin/php-cs-fixer fix ./src --dry-run --diff"
