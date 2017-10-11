@@ -34,8 +34,8 @@ class RetroAchievements
         return array_map(function ($data) {
             $user = new User();
             $user->username = $data->{1};
-            $user->points = $data->{2};
-            $user->trueRatio = $data->{3};
+            $user->points = (int) $data->{2};
+            $user->trueRatio = (int) $data->{3};
             return $user;
         }, $userData);
     }
@@ -52,7 +52,7 @@ class RetroAchievements
         
         return array_map(function ($data) {
             $console = new Console();
-            $console->id = $data->ID;
+            $console->id = (int) $data->ID;
             $console->name = $data->Name;
             return $console;
         }, $consoleData);
