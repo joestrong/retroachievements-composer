@@ -27,4 +27,10 @@ class RetroAchievementsSpec extends ObjectBehavior
     {
         $this->getConsoles();
     }
+
+    function it_should_get_games_list()
+    {
+        $consoleId = 1;
+        $this->getGamesForConsole($consoleId);
+    }
 }

@@ -59,6 +59,27 @@ class RetroAchievements
     }
 
     /**
+     * Get the games for a particular console
+     *
+     * @param int $consoleId The id of the console to get games for
+     * @return array Array of \JoeStrong\RetroAchievements\Game objects
+     * @throws \Error
+     */
+    public function getGamesForConsole(int $consoleId) : array
+    {
+        $gamesData = $this->request('API_GetGameList.php', ['i' => $consoleId]);
+
+        return array_map(function ($data) {
+            $game = new Game();
+            $game->id = (int) $data->ID;
+            $game->title = $data->Title;
+            $game->consoleId = (int) $data->ConsoleID;
+            $game->imageIcon = $data->ImageIcon;
+            return $game;
+        }, $gamesData);
+    }
+
+    /**
      * Make a request to the RetroAchievements.org API
      *
      * @param string $endpoint
