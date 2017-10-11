@@ -1,0 +1,4 @@
+suites:
+    acme_suite:
+        namespace: JoeStrong\RetroAchievements
+        psr4_prefix: JoeStrong\RetroAchievements
