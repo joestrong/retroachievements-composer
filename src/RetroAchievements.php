@@ -24,7 +24,7 @@ class RetroAchievements
     /**
      * Get the top ten users on RetroAchievements.org
      *
-     * @return array
+     * @return array Array of \JoeStrong\RetroAchievements\User objects
      * @throws \Error
      */
     public function getTopTenUsers() : array
@@ -38,6 +38,24 @@ class RetroAchievements
             $user->trueRatio = $data->{3};
             return $user;
         }, $userData);
+    }
+
+    /**
+     * Get the consoles on RetroAchievements.org
+     *
+     * @return array Array of \JoeStrong\RetroAchievements\Console objects
+     * @throws \Error
+     */
+    public function getConsoles() : array
+    {
+        $consoleData = $this->request('API_GetConsoleIDs.php');
+        
+        return array_map(function ($data) {
+            $console = new Console();
+            $console->id = $data->ID;
+            $console->name = $data->Name;
+            return $console;
+        }, $consoleData);
     }
 
     /**
