@@ -1,4 +1,4 @@
-## dev-develop
+## 0.2.0
 
 - Added \RetroAchievements\getConsoles()
 - Added \RetroAchievements\getGamesForConsole($consoleId)
