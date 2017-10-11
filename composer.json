@@ -21,5 +21,8 @@
     },
     "require-dev": {
         "phpspec/phpspec": "^4.0"
+    },
+    "scripts": {
+        "psr": "./vendor/bin/php-cs-fixer fix ./src --dry-run --diff"
     }
 }
