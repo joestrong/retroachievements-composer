@@ -7,6 +7,7 @@ class RetroAchievements
     protected $apiUrl = 'http://retroachievements.org/API/';
     protected $username;
     protected $apiKey;
+    protected $client;
 
     /**
      * Makes requests to the RetroAchievements.org API
@@ -14,11 +15,14 @@ class RetroAchievements
      * @param string $username Your RetroAchievements.org username
      * @param string $apiKey Your RetroAchievements.org API key
      */
-    public function __construct(string $username, string $apiKey)
+    public function __construct(string $username, string $apiKey, $client = null)
     {
         $this->username = $username;
         $this->apiKey = $apiKey;
-        $this->client = new Client(['base_uri' => $this->apiUrl]);
+        $this->client = $client;
+        if (!isset($client)) {
+            $this->client = new Client(['base_uri' => $this->apiUrl]);
+        }
     }
 
     /**
