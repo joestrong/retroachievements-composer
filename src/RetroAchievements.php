@@ -14,15 +14,13 @@ class RetroAchievements
      *
      * @param string $username Your RetroAchievements.org username
      * @param string $apiKey Your RetroAchievements.org API key
+     * @param Client $client An instance of the GuzzleHttp client
      */
-    public function __construct(string $username, string $apiKey, $client = null)
+    public function __construct(string $username, string $apiKey, Client $client = null)
     {
         $this->username = $username;
         $this->apiKey = $apiKey;
-        $this->client = $client;
-        if (!isset($client)) {
-            $this->client = new Client(['base_uri' => $this->apiUrl]);
-        }
+        $this->client = $client ?? new Client(['base_uri' => $this->apiUrl]);
     }
 
     /**
