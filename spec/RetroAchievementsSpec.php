@@ -15,6 +15,7 @@ use PhpSpec\Exception\Exception;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+
 class RetroAchievementsSpec extends ObjectBehavior
 {
     function let()
@@ -134,33 +135,34 @@ class RetroAchievementsSpec extends ObjectBehavior
         $handler = HandlerStack::create($mock);
         $this->beConstructedWith('user', 'apiKey', new Client(['handler' => $handler]));
 
+        /** @var Game $gameInfo */
         $gameInfo = $this->getGameInfo(504);
-        $gameInfo->title->shouldEqual('Super Mario Land');
-        $gameInfo->forumTopicId->shouldEqual(111);
-        $gameInfo->consoleId->shouldEqual(4);
-        $gameInfo->imageIcon->shouldEqual('/Images/000963.png');
-        $gameInfo->gameIcon->shouldEqual('/Images/000963.png');
-        $gameInfo->imageTitle->shouldEqual('/Images/000128.png');
-        $gameInfo->imageInGame->shouldEqual('/Images/000129.png');
-        $gameInfo->imageBoxArt->shouldEqual('/Images/000477.png');
-        $gameInfo->publisher->shouldEqual('Nintendo');
-        $gameInfo->developer->shouldEqual('Nintendo');
-        $gameInfo->genre->shouldEqual('Platformer');
-        $gameInfo->releaseDate->shouldEqual('April 21, 1989');
+        $gameInfo->getTitle()->shouldEqual('Super Mario Land');
+        $gameInfo->getForumTopicId()->shouldEqual(111);
+        $gameInfo->getConsoleId()->shouldEqual(4);
+        $gameInfo->getImageIcon()->shouldEqual('/Images/000963.png');
+        $gameInfo->getGameIcon()->shouldEqual('/Images/000963.png');
+        $gameInfo->getImageTitle()->shouldEqual('/Images/000128.png');
+        $gameInfo->getImageInGame()->shouldEqual('/Images/000129.png');
+        $gameInfo->getImageBoxArt()->shouldEqual('/Images/000477.png');
+        $gameInfo->getPublisher()->shouldEqual('Nintendo');
+        $gameInfo->getDeveloper()->shouldEqual('Nintendo');
+        $gameInfo->getGenre()->shouldEqual('Platformer');
+        $gameInfo->getReleaseDate()->shouldEqual('April 21, 1989');
 
         $gameInfo = $this->getGameInfo(344);
-        $gameInfo->title->shouldEqual('Contra III: The Alien Wars');
-        $gameInfo->forumTopicId->shouldEqual(73);
-        $gameInfo->consoleId->shouldEqual(3);
-        $gameInfo->imageIcon->shouldEqual('/Images/003376.png');
-        $gameInfo->gameIcon->shouldEqual('/Images/003376.png');
-        $gameInfo->imageTitle->shouldEqual('/Images/000143.png');
-        $gameInfo->imageInGame->shouldEqual('/Images/000028.png');
-        $gameInfo->imageBoxArt->shouldEqual('/Images/000144.png');
-        $gameInfo->publisher->shouldEqual('Konami');
-        $gameInfo->developer->shouldEqual('Konami');
-        $gameInfo->genre->shouldEqual('Run and gun');
-        $gameInfo->releaseDate->shouldEqual('February 28, 1992');
+        $gameInfo->getTitle()->shouldEqual('Contra III: The Alien Wars');
+        $gameInfo->getForumTopicId()->shouldEqual(73);
+        $gameInfo->getConsoleId()->shouldEqual(3);
+        $gameInfo->getImageIcon()->shouldEqual('/Images/003376.png');
+        $gameInfo->getGameIcon()->shouldEqual('/Images/003376.png');
+        $gameInfo->getImageTitle()->shouldEqual('/Images/000143.png');
+        $gameInfo->getImageInGame()->shouldEqual('/Images/000028.png');
+        $gameInfo->getImageBoxArt()->shouldEqual('/Images/000144.png');
+        $gameInfo->getPublisher()->shouldEqual('Konami');
+        $gameInfo->getDeveloper()->shouldEqual('Konami');
+        $gameInfo->getGenre()->shouldEqual('Run and gun');
+        $gameInfo->getReleaseDate()->shouldEqual('February 28, 1992');
     }
 
     function it_should_return_a_game_object_with_an_id_from_get_game_info()
@@ -172,8 +174,8 @@ class RetroAchievementsSpec extends ObjectBehavior
         $handler = HandlerStack::create($mock);
         $this->beConstructedWith('user', 'apiKey', new Client(['handler' => $handler]));
 
-        $this->getGameInfo(504)->id->shouldEqual(504);
-        $this->getGameInfo(344)->id->shouldEqual(344);
+        $this->getGameInfo(504)->getId()->shouldEqual(504);
+        $this->getGameInfo(344)->getId()->shouldEqual(344);
     }
 
     public function getMatchers(): array

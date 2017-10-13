@@ -11,5 +11,5 @@ $ra = new RetroAchievements($username, $apiKey);
 $games = $ra->getGamesForConsole(3);
 
 foreach ($games as $game) {
-    echo "$game->title<br>";
+    echo "$game->getTitle()<br>";
 }

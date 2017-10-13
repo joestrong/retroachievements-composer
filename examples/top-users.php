@@ -12,5 +12,5 @@ $users = $ra->getTopTenUsers();
 
 echo "<strong>Top users</strong><br>";
 foreach ($users as $user) {
-    echo "$user->username<br>";
+    echo "$user->getUsername()<br>";
 }
