@@ -82,14 +82,42 @@ class RetroAchievements
     }
 
     /**
+     * Get game's info from a game id
+     *
+     * @param int $gameId The id of the game to look up
+     * @return Game The game containing the info
+     */
+    public function getGameInfo(int $gameId) : Game
+    {
+        $gameData = $this->request('API_GetGame.php', ['i' => $gameId]);
+        
+        $game = new Game();
+        $game->id = $gameId;
+        $game->title = $gameData->Title;
+        $game->forumTopicId = $gameData->ForumTopicID;
+        $game->consoleId = $gameData->ConsoleID;
+        $game->imageIcon = $gameData->ImageIcon;
+        $game->gameIcon = $gameData->GameIcon;
+        $game->imageTitle = $gameData->ImageTitle;
+        $game->imageInGame = $gameData->ImageIngame;
+        $game->imageBoxArt = $gameData->ImageBoxArt;
+        $game->publisher = $gameData->Publisher;
+        $game->developer = $gameData->Developer;
+        $game->genre = $gameData->Genre;
+        $game->releaseDate = $gameData->Released;
+
+        return $game;
+    }
+
+    /**
      * Make a request to the RetroAchievements.org API
      *
      * @param string $endpoint
      * @param array $parameters
-     * @return array
+     * @return mixed
      * @throws \Error
      */
-    protected function request(string $endpoint, array $parameters = []) : array
+    protected function request(string $endpoint, array $parameters = [])
     {
         $auth = "?z={$this->username}&y={$this->apiKey}";
         $parameters = array_reduce(array_keys($parameters), function ($carry, $key) use ($parameters) {

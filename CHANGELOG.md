@@ -1,8 +1,9 @@
 ## dev-develop
 
-- Improvments to RetroAchivements::__construct
-- Added unit tests
+- Added RetroAchievements::getGameInfo($gameId)
 - Added requirement for >= PHP 7.1
+- Updated unit tests
+- Improvments to RetroAchivements::__construct
 
 ## 0.2.0
 

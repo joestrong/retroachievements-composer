@@ -36,3 +36,7 @@ Get the consoles
 Get games for console
 
 `$ra->getGamesForConsole($consoleId);`
+
+Get game info
+
+`$ra->getGameInfo($gameId);`
