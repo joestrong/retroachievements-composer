@@ -1,4 +1,4 @@
-## dev-develop
+## 0.3.0
 
 - Added RetroAchievements::getGameInfo($gameId)
 - Added requirement for >= PHP 7.1
