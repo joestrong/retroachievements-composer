@@ -7,24 +7,26 @@ class RetroAchievements
     protected $apiUrl = 'http://retroachievements.org/API/';
     protected $username;
     protected $apiKey;
+    protected $client;
 
     /**
      * Makes requests to the RetroAchievements.org API
      *
      * @param string $username Your RetroAchievements.org username
      * @param string $apiKey Your RetroAchievements.org API key
+     * @param Client $client An instance of the GuzzleHttp client
      */
-    public function __construct(string $username, string $apiKey)
+    public function __construct(string $username, string $apiKey, Client $client = null)
     {
         $this->username = $username;
         $this->apiKey = $apiKey;
-        $this->client = new Client(['base_uri' => $this->apiUrl]);
+        $this->client = $client ?? new Client(['base_uri' => $this->apiUrl]);
     }
 
     /**
      * Get the top ten users on RetroAchievements.org
      *
-     * @return array Array of \JoeStrong\RetroAchievements\User objects
+     * @return User[]
      * @throws \Error
      */
     public function getTopTenUsers() : array
@@ -32,18 +34,14 @@ class RetroAchievements
         $userData = $this->request('API_GetTopTenUsers.php');
         
         return array_map(function ($data) {
-            $user = new User();
-            $user->username = $data->{1};
-            $user->points = (int) $data->{2};
-            $user->trueRatio = (int) $data->{3};
-            return $user;
+            return new User($data->{1}, (int) $data->{2}, (int) $data->{3});
         }, $userData);
     }
 
     /**
      * Get the consoles on RetroAchievements.org
      *
-     * @return array Array of \JoeStrong\RetroAchievements\Console objects
+     * @return Console[]
      * @throws \Error
      */
     public function getConsoles() : array
@@ -51,10 +49,7 @@ class RetroAchievements
         $consoleData = $this->request('API_GetConsoleIDs.php');
         
         return array_map(function ($data) {
-            $console = new Console();
-            $console->id = (int) $data->ID;
-            $console->name = $data->Name;
-            return $console;
+            return new Console((int) $data->ID, $data->Name);
         }, $consoleData);
     }
 
@@ -62,21 +57,48 @@ class RetroAchievements
      * Get the games for a particular console
      *
      * @param int $consoleId The id of the console to get games for
-     * @return array Array of \JoeStrong\RetroAchievements\Game objects
+     * @return Game[]
      * @throws \Error
      */
     public function getGamesForConsole(int $consoleId) : array
     {
         $gamesData = $this->request('API_GetGameList.php', ['i' => $consoleId]);
 
-        return array_map(function ($data) {
-            $game = new Game();
-            $game->id = (int) $data->ID;
-            $game->title = $data->Title;
-            $game->consoleId = (int) $data->ConsoleID;
-            $game->imageIcon = $data->ImageIcon;
-            return $game;
+        return array_map(function ($gameData) {
+            return new Game(
+                $gameData->ID,
+                $gameData->Title,
+                $gameData->ConsoleID,
+                $gameData->ImageIcon
+            );
         }, $gamesData);
+    }
+
+    /**
+     * Get game's info from a game id
+     *
+     * @param int $gameId The id of the game to look up
+     * @return Game The game containing the info
+     */
+    public function getGameInfo(int $gameId) : Game
+    {
+        $gameData = $this->request('API_GetGame.php', ['i' => $gameId]);
+
+        return new Game(
+            $gameId,
+            $gameData->Title,
+            $gameData->ConsoleID,
+            $gameData->ImageIcon,
+            $gameData->GameIcon,
+            $gameData->ImageTitle,
+            $gameData->ImageIngame,
+            $gameData->ImageBoxArt,
+            $gameData->Publisher,
+            $gameData->Developer,
+            $gameData->Genre,
+            $gameData->Released,
+            $gameData->ForumTopicID
+        );
     }
 
     /**
@@ -84,10 +106,10 @@ class RetroAchievements
      *
      * @param string $endpoint
      * @param array $parameters
-     * @return array
+     * @return mixed
      * @throws \Error
      */
-    protected function request(string $endpoint, array $parameters = []) : array
+    protected function request(string $endpoint, array $parameters = [])
     {
         $auth = "?z={$this->username}&y={$this->apiKey}";
         $parameters = array_reduce(array_keys($parameters), function ($carry, $key) use ($parameters) {

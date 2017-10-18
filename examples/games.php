@@ -10,6 +10,8 @@ $apiKey = '';
 $ra = new RetroAchievements($username, $apiKey);
 $games = $ra->getGamesForConsole(3);
 
+echo "<ul>";
 foreach ($games as $game) {
-    echo "$game->title<br>";
+    echo "<li>{$game->getTitle()}</li>";
 }
+echo "</ul>";

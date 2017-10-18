@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.1.0",
         "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
@@ -24,6 +24,7 @@
         "friendsofphp/php-cs-fixer": "^2.7"
     },
     "scripts": {
-        "psr": "./vendor/bin/php-cs-fixer fix ./src --dry-run --diff"
+        "psr": "./vendor/bin/php-cs-fixer fix ./src --dry-run --diff",
+        "test": "./vendor/bin/phpspec run"
     }
 }

@@ -10,6 +10,8 @@ $apiKey = '';
 $ra = new RetroAchievements($username, $apiKey);
 $consoles = $ra->getConsoles();
 
+echo "<ul>";
 foreach ($consoles as $console) {
-    echo "$console->name<br>";
+    echo "<li>{$console->getName()}</li>";
 }
+echo "</ul>";
