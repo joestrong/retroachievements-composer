@@ -11,6 +11,8 @@ $ra = new RetroAchievements($username, $apiKey);
 $users = $ra->getTopTenUsers();
 
 echo "<strong>Top users</strong><br>";
+echo "<ol>";
 foreach ($users as $user) {
-    echo "$user->getUsername()<br>";
+    echo "<li>{$user->getUsername()}</li>";
 }
+echo "</ol>";
