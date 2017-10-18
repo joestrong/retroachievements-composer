@@ -4,6 +4,8 @@
 - Added requirement for >= PHP 7.1
 - Updated unit tests
 - Improvments to RetroAchivements::__construct
+- Made returned models immutable
+- Added project contributing guidelines
 
 ## 0.2.0
 
