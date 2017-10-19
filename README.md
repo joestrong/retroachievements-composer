@@ -45,15 +45,15 @@ Get game info
 
 ## API Key
 
-To use the wrapper you´ll need a valid username and api key. For that you must:
+To use the wrapper you'll need a valid username and api key. For that you must:
 
-1. Create an account in (retroachievements.org)[http://retroachievements.org/createaccount.php]
-2. Valid your account in your email
-3. Login with your username and password (login)[http://retroachievements.org]
-4. Go to settings >> (my settings)[http://retroachievements.org/controlpanel.php] 
-5. Copy the api key value
+1. Create an account on [retroachievements.org](http://retroachievements.org/createaccount.php)
+2. Validate your email address
+3. Login with your username and password [login](http://retroachievements.org)
+4. Go to settings > [my settings](http://retroachievements.org/controlpanel.php) 
+5. Copy the api key
 
-The username used will be the api username and the api key of the settings the key for connecting to the api.
+For the library credentials, use your retroachievements username and the api key from the settings page.
 
 
 ## Contributing
