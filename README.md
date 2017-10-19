@@ -48,3 +48,12 @@ Get the consoles
 Get games for console
 
 `$ra->getGamesForConsole($consoleId);`
+
+Get game info
+
+`$ra->getGameInfo($gameId);`
+
+
+## Contributing
+
+See [CONTRIBUTING.md](https://github.com/joestrong/retroachievements-composer/blob/master/CONTRIBUTING.md)
