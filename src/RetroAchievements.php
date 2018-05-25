@@ -102,6 +102,38 @@ class RetroAchievements
     }
 
     /**
+     * Get feed of a user's latest activity
+     * @param string $username The user to show a feed for
+     * @param int $count The number of feed items to show
+     * @param int $offset The page of the feed to start on
+     * @return array Collection of Feed objects
+     */
+    public function getUserFeed($username, $count, $offset = 0)
+    {
+        $feedData = $this->request('API_GetFeed.php', ['u' => $username, 'c' => $count, 'o' => $offset]);
+        $user = new User($username, 0, 0);
+
+        $feedData = array_map(function ($feedData) use ($user) {
+            $feedItem = new FeedItem((int) $feedData->activitytype, $user, $feedData->timestamp);
+
+            if ($feedItem->type === FeedItem::STARTED_PLAYING) {
+                $game = $this->getGameInfo((int) $feedData->GameID);
+                $feedItem->setGame($game);
+            }
+
+            if ($feedItem->type === FeedItem::ACHIEVEMENT_EARNED) {
+                $game = $this->getGameInfo((int) $feedData->GameID);
+                $achievement = new Achievement($feedData->AchTitle, $feedData->AchDesc, $game, $feedData->AchPoints);
+                $feedItem->setAchievement($achievement);
+            }
+
+            return $feedItem;
+        }, $feedData);
+
+        return array_reverse($feedData);
+    }
+
+    /**
      * Make a request to the RetroAchievements.org API
      *
      * @param string $endpoint
